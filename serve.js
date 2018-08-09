@@ -22,6 +22,8 @@ var server = http.createServer(function(request, response){
   console.log('HTTP 路径为\n' + path)
   if(path == '/index.html'){
     var string=fs.readFileSync('./index.html','utf8');
+    var value = fs.readFileSync('./data', 'utf8')
+    string=string.replace('$number',value)
     response.statusCode = 200;
     response.setHeader('Content-Type', 'text/html; charset=utf-8')
     response.write(string);
@@ -37,6 +39,12 @@ var server = http.createServer(function(request, response){
     var string =fs.readFileSync('./main.js','utf8');
     response.setHeader('Content-Type', 'application/javascript');
     response.write(string);
+    response.end();
+  } else if (path == '/path' && method.toUpperCase() === 'POST') {
+    var value = fs.readFileSync('./data', 'utf8')
+    value--;
+    fs.writeFileSync('./data', value);
+    response.write('ok')
     response.end();
   }else{
     response.statusCode = 404
