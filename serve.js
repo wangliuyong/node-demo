@@ -27,7 +27,7 @@ var server = http.createServer(function(request, response){
     response.statusCode = 200;
     response.setHeader('Content-Type', 'text/html; charset=utf-8')
     response.write(string);
-    response.end()
+    response.end()   
   }else if(path == '/style.css'){
     var string = fs.readFileSync('./style.css', 'utf8');
     response.statusCode = 200;
@@ -40,11 +40,16 @@ var server = http.createServer(function(request, response){
     response.setHeader('Content-Type', 'application/javascript');
     response.write(string);
     response.end();
-  } else if (path == '/path' && method.toUpperCase() === 'POST') {
+  } else if (path == '/path') {
+    response.statusCode=200;
     var value = fs.readFileSync('./data', 'utf8')
     value--;
     fs.writeFileSync('./data', value);
-    response.write('ok')
+    
+    //response.setHeader('Content-Type', 'image/png');使用图片发送请求时
+    //response.write(fs.readFileSync('./1.png'));
+    response.setHeader('content-Type', 'application/javascript'); //用script发送请求
+    response.write(`amount.innerText = amount.innerText-1;`)
     response.end();
   }else{
     response.statusCode = 404
