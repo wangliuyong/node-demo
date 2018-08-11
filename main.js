@@ -1,11 +1,6 @@
 
 
-button.addEventListener('click', () => {
-
-
-
-    
-    
+button.addEventListener('click', () => { 
 
     /* let functionName='wang'+parseInt(Math.random()*100000000,10)
     window[functionName]=function(result){
@@ -73,6 +68,13 @@ button.addEventListener('click', () => {
        // Work with the response
        success: function (response) {
            console.log(response); // server response
+           if (response === 'succed'){
+                let mount = parseInt(amount.innerText, 10);
+                mount--;
+                amount.innerText = mount;
+           }else{
+                alert('对不起，您的请求失败')
+           }
        }
    });
 
